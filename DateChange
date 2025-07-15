@@ -1,0 +1,60 @@
+# 📁 Input and output folders
+$inputFolder = "C:\Users\[USER]\[SUBFOLDER]\input" # !!! CHANGE TO YOUR INPUT FOLDER
+$outputFolder = "C:\Users\[USER]\[SUBFOLDER]\output" # !!! CHANGE TO YOUR OUTPUT FOLDER
+
+# 📍 Path to ffmpeg.exe
+$ffmpeg = "C:\Users\[USER]\Downloads\ffmpeg\bin\ffmpeg.exe" # !!! CHANGE TO YOUR FFMPEG.EXE LOCATION
+
+# ✅ Ensure output folder exists
+if (-not (Test-Path $outputFolder)) {
+    New-Item -Path $outputFolder -ItemType Directory | Out-Null
+}
+
+# 🔁 Loop through each MP4 file
+Get-ChildItem -Path $inputFolder -Filter *.mp4 | ForEach-Object {
+    $filename = $_.BaseName
+    $fullPath = $_.FullName
+
+    # Match "YYYY MM DD HH mm"
+    if ($filename -match '^(\d{4}) (\d{2}) (\d{2}) (\d{2}) (\d{2})') {
+        $year = $matches[1]
+        $month = $matches[2]
+        $day = $matches[3]
+        $hour = $matches[4]
+        $minute = $matches[5]
+
+        # Format the datetime
+        $timestamp = "$year-$month-$day`T$hour`:$minute`:00"
+        $newDate = Get-Date "$year-$month-$day $hour`:$minute"
+
+        # Create output file name with _updated
+        $newFilename = $filename + "_updated.mp4"
+        $outputPath = Join-Path $outputFolder $newFilename
+
+        # FFmpeg command to update metadata
+        $arguments = @(
+            "-i", "`"$fullPath`"",
+            "-metadata", "creation_time=$timestamp",
+            "-codec", "copy",
+            "-y",  # Overwrite if file already exists
+            "`"$outputPath`""
+        )
+
+        Write-Host "⏳ Processing $($_.Name) → $newFilename"
+
+        & $ffmpeg $arguments
+
+        # Update file system timestamps
+        if (Test-Path $outputPath) {
+            (Get-Item $outputPath).CreationTime = $newDate
+            (Get-Item $outputPath).LastWriteTime = $newDate
+
+            Write-Host "✅ Updated $newFilename → $timestamp"
+        } else {
+            Write-Host "❌ FFmpeg failed for $($_.Name)"
+        }
+
+    } else {
+        Write-Host "⚠️ Skipped $($_.Name): filename format invalid"
+    }
+}
