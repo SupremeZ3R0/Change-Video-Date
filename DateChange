@@ -1,3 +1,4 @@
+# Disclosure: Code created with assistance from AI tools
 # 📁 Input and output folders
 $inputFolder = "C:\Users\[USER]\[SUBFOLDER]\input" # !!! CHANGE TO YOUR INPUT FOLDER
 $outputFolder = "C:\Users\[USER]\[SUBFOLDER]\output" # !!! CHANGE TO YOUR OUTPUT FOLDER
