@@ -1,5 +1,5 @@
 # Change-Video-Date
-Change's video metadata in Windows Explorer's "Date" column, "Date Created", and "Date Modified" based on information reported in the video title. Video title should be formatted as "YYYY MM DD HH mm" where mm is reported in a 24hr format.
+Change's video metadata in Windows Explorer's "Date" column, "Date Created", and "Date Modified" based on information reported in the video title. Video title should be formatted as "YYYY MM DD HH mm" where mm is reported in a 24hr format. <br />
 Example: A video titled "2019 06 04 22 54.mp4" will have its metadata changeed to report a "Date", "Date Created", and "Date Modified" to June 4th 2019 10:54 PM
 # FFmpeg
 The code makes use of FFmpeg
