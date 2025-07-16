@@ -7,8 +7,10 @@ The code makes use of FFmpeg <br />
 Download the FFmpeg executable from https://ffmpeg.org/download.html <br />
 Extract its contents to your desired directory <br />
 # Powershell and Variables
+Take necessary precautions and back up your data before running the code.<br />
 Run the code in Windows Powershell <br />
 Change the variables $inputFolder, $outputFolder, and $ffmpeg <br />
+<br />
 $inputFolder: Variable indicating the folder where your videos are stored <br />
-$outputFolder: Varibale indicating the folder where your modified videos will be placed <br />
+$outputFolder: Variable indicating the folder where your modified videos will be placed <br />
 $ffmpeg: Variable directing to ffmpeg.exe <br />
